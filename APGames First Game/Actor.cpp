@@ -16,6 +16,7 @@ sf::Texture Actor::texture = sf::Texture();
 sf::IntRect Actor::tile = sf::IntRect(96, 128, 32, 32);
 int Actor::animationCounter = 0;
 
+
 Actor::Actor()
 {
 
@@ -36,8 +37,8 @@ Actor::Actor(sf::Vector2i resolution, int frameRateMax)
 	Actor::size.y = resolution.y * 0.11f;
 
 //	set actor's default speed in pixels
-	Actor::speed.x = frameRateMax * 0.04f;
-	Actor::speed.y = frameRateMax * 0.04f;
+	Actor::speed.x = 1.0f;//frameRateMax * 0.04f;
+	Actor::speed.y = 1.0f;//frameRateMax * 0.04f;
 
 //	set actor start position
 	Actor::position.x = resolution.x / 2.0f;
@@ -122,3 +123,35 @@ void Actor::shrink(sf::Vector2f rate){
 	sprite.setScale(scale.x -= rate.x, scale.y -= rate.y);
 
 };
+
+void Actor::selectActorTileset(int selction = 0){
+
+	switch (selction) {
+
+	case 0:
+		tile = sf::IntRect(0, 0, 32, 32);
+		break;
+	case 1:
+		tile = sf::IntRect(0, 128, 32, 32);
+		break;
+	case 2:
+		tile = sf::IntRect(96, 0, 32, 32);
+		break;
+	case 3:
+		tile = sf::IntRect(96, 128, 32, 32);
+		break;
+	case 4:
+		tile = sf::IntRect(192, 0, 32, 32);
+		break;
+	case 5:
+		tile = sf::IntRect(192, 128, 32, 32);
+		break; 
+	case 6:
+		tile = sf::IntRect(288, 0, 32, 32);
+		break;
+	case 7:
+		tile = sf::IntRect(288, 128, 32, 32);
+		break;
+	}
+
+}
