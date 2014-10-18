@@ -50,6 +50,10 @@ Actor::Actor(sf::Vector2i resolution, int frameRateMax)
 	
 	sprite.setTextureRect(tile);
 	sprite.setTexture(texture);
+	/////////////////////////////////////////////////////////
+	///////////////////Justin's Change//////////////////////
+	///////////////////////////////////////////////////////
+	sprite.setPosition(400, 300);
 
 }
 
@@ -65,47 +69,46 @@ void Actor::loadTexture(){
 
 }
 
-void Actor::moveLeft(){
-
-//	Change the position of the sprite
-	Actor::position.x -= Actor::speed.x;
-	Actor::sprite.setPosition(Actor::position.x, Actor::position.y);
-	
-	
-	
-//	play the appropriate sprite animations
-	sprite.setTextureRect(sf::IntRect(  (tile.left + animationCounter),
-										(tile.top + tile.height),
-										 tile.width,
-										 tile.height));
-
+////////////////////////////////////////////////////////////////
+///////////Justin's Change through here////////////////////////
+//////////////////////////////////////////////////////////////
+void Actor::moveLeft()
+{
+// Change the position of the sprite
+Actor::position.x -= Actor::speed.x;
+Actor::sprite.setPosition(Actor::position.x, Actor::position.y);
+// play the appropriate sprite animations
+sprite.setTextureRect(sf::IntRect( (tile.left + animationCounter),
+(tile.top + tile.height),
+tile.width,
+tile.height));
 }
-
-void Actor::moveRight(){
-
-	Actor::position.x += Actor::speed.x;
-	Actor::sprite.setPosition(Actor::position.x, Actor::position.y);
-
-	
-	sprite.setTextureRect(sf::IntRect( (tile.left + animationCounter),
-										tile.top + (2 * tile.height),
-										tile.width,
-										tile.height));
-
+void Actor::moveRight()
+{
+Actor::position.x += Actor::speed.x;
+Actor::sprite.setPosition(Actor::position.x, Actor::position.y);
+sprite.setTextureRect(sf::IntRect( (tile.left + animationCounter),
+tile.top + (2 * tile.height),
+tile.width,
+tile.height));
 };
-
-void Actor::moveUp(){
-
-	Actor::position.y -= Actor::speed.y;
-	Actor::sprite.setPosition(Actor::position.x, Actor::position.y);
-
+void Actor::moveUp()
+{
+Actor::position.y -= Actor::speed.y;
+Actor::sprite.setPosition(Actor::position.x, Actor::position.y);
+sprite.setTextureRect(sf::IntRect( (tile.left + animationCounter),
+tile.top + (3 * tile.height),
+tile.width,
+tile.height));
 };
-
-void Actor::moveDown(){
-
-	Actor::position.y += Actor::speed.y;
-	Actor::sprite.setPosition(Actor::position.x, Actor::position.y);
-
+void Actor::moveDown()
+{
+Actor::position.y += Actor::speed.y;
+Actor::sprite.setPosition(Actor::position.x, Actor::position.y);
+sprite.setTextureRect(sf::IntRect( (tile.left + animationCounter),
+tile.top + (0 * tile.height),
+tile.width,
+tile.height));
 };
 
 void Actor::grow(sf::Vector2f rate){
