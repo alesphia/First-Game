@@ -24,6 +24,8 @@ public:
 
 	void grow(sf::Vector2f);
 	void shrink(sf::Vector2f);
+	
 	void loadTexture();
+	void selectActorTileset(int);
 };
 //sf::Vector2f Actor::size = sf::Vector2f(0.0f, 0.0f);
