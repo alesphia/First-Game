@@ -38,7 +38,7 @@ Actor::Actor(sf::Vector2i resolution, int frameRateMax)
 
 //	set actor's default speed in pixels
 	Actor::speed.x = 1.0f;//frameRateMax * 0.04f;
-	Actor::speed.y = frameRateMax * 0.04f;
+	Actor::speed.y = 1.0f;//frameRateMax * 0.04f;
 
 //	set actor start position
 	Actor::position.x = resolution.x / 2.0f;
