@@ -10,13 +10,13 @@
 void handlePlayerInput(Actor&);
 
 
-int main(int argc, _TCHAR* argv[])
+int main(int argc, CHAR* argv[])
 {
 	int frameRateMax = 60;
 	
 	sf::Vector2i resolution;
-	resolution.x = 800;
-	resolution.y = 600;
+	resolution.x = 1024;
+	resolution.y = 720;
 	Actor player(resolution, frameRateMax);
 	
 	
@@ -66,7 +66,7 @@ int main(int argc, _TCHAR* argv[])
 
 }
 
-void handlePlayerInput(Actor &player){
+inline void handlePlayerInput(Actor &player){
 	
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
@@ -100,5 +100,47 @@ void handlePlayerInput(Actor &player){
 	{
 		player.moveDown();
 	}
+
+
+////////////////////////////////////////////////////////////////////////
+///////////////test tileset selection for actor/////////////////////////
+////////////////////////////////////////////////////////////////////////
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad0))
+	{
+		player.selectActorTileset(0);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1))
+	{
+		player.selectActorTileset(1);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2))
+	{
+		player.selectActorTileset(2);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3))
+	{
+		player.selectActorTileset(3);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4))
+	{
+		player.selectActorTileset(4);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5))
+	{
+		player.selectActorTileset(5);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad6))
+	{
+		player.selectActorTileset(6);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7))
+	{
+		player.selectActorTileset(7);
+	}
+
+///////////////////////////////////////////////////////////////////////////
+
+
 }
 
