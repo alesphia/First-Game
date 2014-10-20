@@ -24,6 +24,7 @@ public:
 
 	void grow(sf::Vector2f);
 	void shrink(sf::Vector2f);
+	void jump();
 	
 	void loadTexture();
 	void selectActorTileset(int);
