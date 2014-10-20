@@ -138,7 +138,10 @@ inline void handlePlayerInput(Actor &player){
 	{
 		player.selectActorTileset(7);
 	}
-
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		player.jump();
+	}
 ///////////////////////////////////////////////////////////////////////////
 
 
