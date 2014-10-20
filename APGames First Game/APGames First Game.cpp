@@ -102,6 +102,15 @@ inline void handlePlayerInput(Actor &player){
 	}
 
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+	{
+		player.speed=(sf::Vector2f(5.0f, 5.0f));
+	}
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+	{
+		player.speed=(sf::Vector2f(2.0f , 2.0f));
+	}
+
 ////////////////////////////////////////////////////////////////////////
 ///////////////test tileset selection for actor/////////////////////////
 ////////////////////////////////////////////////////////////////////////
