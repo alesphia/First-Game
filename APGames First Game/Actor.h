@@ -18,6 +18,8 @@ public:
 	static bool isFalling;
 	static bool isJumping;
 	static float jumpPower;
+	static bool hasXCollision;
+	static bool hasYCollision;
 	//static int x;
 
 	void updatePosition();
@@ -34,5 +36,7 @@ public:
 	
 	void loadTexture();
 	void selectActorTileset(int);
+
+	void handleCollision();
 };
 //sf::Vector2f Actor::size = sf::Vector2f(0.0f, 0.0f);

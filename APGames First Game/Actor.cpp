@@ -17,6 +17,8 @@ sf::IntRect Actor::tile = sf::IntRect(96, 128, 32, 32);
 int Actor::animationCounter = 0;
 bool Actor::isFalling = false;
 bool Actor::isJumping = false;
+bool Actor::hasXCollision = false;
+bool Actor::hasYCollision = false;
 float Actor::jumpPower = 5.0f;
 
 
@@ -183,4 +185,13 @@ void Actor::fall(sf::Time time){
 
 void Actor::updatePosition(){
 	Actor::sprite.move(speed);
+}
+
+void Actor::handleCollision(){
+	if (Actor::hasXCollision){
+		Actor::speed.x = 0.0f;
+	}
+	if (Actor::hasYCollision){
+		Actor::speed.y = 0.0f;
+	}
 }

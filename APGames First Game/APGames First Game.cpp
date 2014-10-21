@@ -65,6 +65,7 @@ int main(int argc, CHAR* argv[])
 
 		
 		handlePlayerInput(player);
+		player.handleCollision();
 		player.updatePosition();
 
 		window.clear();
@@ -178,7 +179,19 @@ inline void handlePlayerInput(Actor &player){
 		player.jump(gameClock.elapsedTime);
 
 	}
-
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+	{
+		player.hasXCollision = true;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y))
+	{
+		player.hasYCollision = true;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
+	{
+		player.hasXCollision = false;
+		player.hasYCollision = false;
+	}
 
 ///////////////////////////////////////////////////////////////////////////
 
