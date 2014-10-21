@@ -15,7 +15,12 @@ public:
 	static sf::Texture texture;
 	static sf::IntRect tile;// = sf::IntRect(96, 128, 32, 32);
 	static int animationCounter;
+	static bool isFalling;
+	static bool isJumping;
+	static float jumpPower;
 	//static int x;
+
+	void updatePosition();
 
 	void moveLeft();
 	void moveRight();
@@ -24,7 +29,8 @@ public:
 
 	void grow(sf::Vector2f);
 	void shrink(sf::Vector2f);
-	void jump();
+	void jump(sf::Time);
+	void fall(sf::Time);
 	
 	void loadTexture();
 	void selectActorTileset(int);

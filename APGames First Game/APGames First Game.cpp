@@ -6,13 +6,19 @@
 #include <iostream>
 #include <Windows.h>
 #include "Actor.h"
+#include "GameClock.h"
 
 void handlePlayerInput(Actor&);
 
+static GameClock gameClock;
 
 int main(int argc, CHAR* argv[])
 {
+	gameClock.timer.restart();
 	int frameRateMax = 60;
+	sf::Time jumpHangTime;
+	jumpHangTime = sf::seconds(0.37);
+	sf::Time jumpElapsedTime = sf::seconds(0);
 	
 	sf::Vector2i resolution;
 	resolution.x = 1024;
@@ -38,6 +44,8 @@ int main(int argc, CHAR* argv[])
 
 	while (window.isOpen())
 	{
+		gameClock.elapsedTime = gameClock.timer.restart();
+
 		if (player.animationCounter > 62)
 		{
 			player.animationCounter = 0;
@@ -50,9 +58,15 @@ int main(int argc, CHAR* argv[])
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
+
+		if (player.isFalling){
+			player.fall(gameClock.elapsedTime);
+		}
+
 		
 		handlePlayerInput(player);
-		
+		player.updatePosition();
+
 		window.clear();
 		window.draw(player.sprite);   //earlier drawn is occluded by later drawn, want player on top so draw later
 		window.display();
@@ -67,6 +81,18 @@ int main(int argc, CHAR* argv[])
 }
 
 inline void handlePlayerInput(Actor &player){
+
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Mouse::isButtonPressed(sf::Mouse::Right)){
+		player.speed.x = 0.0f;
+
+	}
+
+	if (!player.isFalling && !player.isJumping){
+		player.speed.y = 0.0f;
+	}
+
+
+
 	
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
@@ -140,8 +166,11 @@ inline void handlePlayerInput(Actor &player){
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
-		player.jump();
+		player.jump(gameClock.elapsedTime);
+
 	}
+
+
 ///////////////////////////////////////////////////////////////////////////
 
 
