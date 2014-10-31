@@ -7,6 +7,7 @@
 #include <Windows.h>
 #include "Actor.h"
 #include "GameClock.h"
+#include "TileMap.h"
 
 void handlePlayerInput(Actor&);
 
@@ -14,6 +15,26 @@ static GameClock gameClock;
 
 int main(int argc, CHAR* argv[])
 {
+
+	// define the level with an array of tile indices
+	int level[] =
+	{
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 65, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 65, 65, 65, 65,
+		65, 65, 65, 65, 65, 65, 65,65,65, 65, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	};
+
+	// create the tilemap from the level definition
+	TileMap map;
+	if (!map.load("Dungeon_B.png", sf::Vector2u(32, 32), level, 16, 8))
+		return -1;
+
+
 	gameClock.timer.restart();
 	int frameRateMax = 60;
 	sf::Time jumpHangTime;
@@ -21,15 +42,16 @@ int main(int argc, CHAR* argv[])
 	sf::Time jumpElapsedTime = sf::seconds(0);
 	
 	sf::Vector2i resolution;
-	resolution.x = 1024;
-	resolution.y = 720;
+	resolution.x = 512;
+	resolution.y = 256;
 	Actor player(resolution, frameRateMax);
+	player.jumpPower = 5.0f;
 	
 	
 	
 	////hide console////
-	HWND hWnd = GetConsoleWindow();
-	ShowWindow(hWnd, SW_HIDE);
+//	HWND hWnd = GetConsoleWindow();
+//	ShowWindow(hWnd, SW_HIDE);
 	///////////////////
 
 
@@ -65,10 +87,12 @@ int main(int argc, CHAR* argv[])
 
 		
 		handlePlayerInput(player);
+		player.checkCollision(level, 120);
 		player.handleCollision();
 		player.updatePosition();
 
 		window.clear();
+		window.draw(map);
 		window.draw(player.sprite);   //earlier drawn is occluded by later drawn, want player on top so draw later
 		window.display();
 		
@@ -83,7 +107,7 @@ int main(int argc, CHAR* argv[])
 
 inline void handlePlayerInput(Actor &player){
 
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Mouse::isButtonPressed(sf::Mouse::Right)){
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
 		player.speed.x = 0.0f;
 
 	}
