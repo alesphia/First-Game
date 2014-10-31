@@ -13,14 +13,13 @@ public:
 	static sf::Vector2f scale;
 	static sf::Vector2f size;
 	static sf::Texture texture;
-	static sf::IntRect tile;// = sf::IntRect(96, 128, 32, 32);
+	static sf::IntRect tile;
 	static int animationCounter;
 	static bool isFalling;
 	static bool isJumping;
 	static float jumpPower;
 	static bool hasXCollision;
 	static bool hasYCollision;
-	//static int x;
 
 	void updatePosition();
 
@@ -36,7 +35,9 @@ public:
 	
 	void loadTexture();
 	void selectActorTileset(int);
-
+	void checkCollision(int map[], int);
 	void handleCollision();
+//	void handleCollision(sf::Rect<float>, sf::Rect<float>);
+
 };
-//sf::Vector2f Actor::size = sf::Vector2f(0.0f, 0.0f);
+

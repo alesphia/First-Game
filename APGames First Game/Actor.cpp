@@ -19,7 +19,7 @@ bool Actor::isFalling = false;
 bool Actor::isJumping = false;
 bool Actor::hasXCollision = false;
 bool Actor::hasYCollision = false;
-float Actor::jumpPower = 5.0f;
+float Actor::jumpPower = 10.0f;
 
 
 Actor::Actor()
@@ -48,6 +48,7 @@ Actor::Actor(sf::Vector2i resolution, int frameRateMax)
 //	set actor start position
 	Actor::position.x = resolution.x / 2.0f;
 	Actor::position.y = resolution.y / 2.0f;
+	Actor::sprite.setPosition(position);
 
 //	load a texture to be assigned to actor
 	loadTexture();
@@ -73,11 +74,10 @@ void Actor::loadTexture(){
 
 void Actor::moveLeft(){
 
-//	Change the position of the sprite
-//	Actor::position.x -= Actor::speed.x;
-//	Actor::sprite.setPosition(Actor::position.x, Actor::position.y);
 // Handling position in updatePosition funciton, just need to change speed
-	speed.x = -1.0f;
+	speed.x = -2.0f;
+	//if actor isRunning
+	//multiply speed.x * run multiplier
 	
 	
 //	play the appropriate sprite animations
@@ -90,10 +90,8 @@ void Actor::moveLeft(){
 
 void Actor::moveRight(){
 
-//	Actor::position.x += Actor::speed.x;
-//	Actor::sprite.setPosition(Actor::position.x, Actor::position.y);
 // Handling position in updatePosition funciton, just need to change speed
-	speed.x = 1.0f;
+	speed.x = 2.0f;
 	
 	sprite.setTextureRect(sf::IntRect( (tile.left + animationCounter),
 										tile.top + (2 * tile.height),
@@ -163,12 +161,11 @@ void Actor::selectActorTileset(int selction = 0){
 
 };
 void Actor::jump(sf::Time time){
-	//to do
-//	Actor::position.y = position.y + (Actor::speed.y * time.asSeconds()) + (GRAVITY * (time.asSeconds() * time.asSeconds())) / 2.0f;
-//	Actor::speed.y = speed.y + (jumpPower * time.asSeconds());
-//	Actor::sprite.setPosition(Actor::position.x, Actor::position.y);
+
 	Actor::speed.y = (-1)*jumpPower;
 	Actor::isFalling = true;
+	hasYCollision = false;
+	isJumping = true;
 };
 
 void Actor::fall(sf::Time time){
@@ -177,9 +174,9 @@ void Actor::fall(sf::Time time){
 //	v[2] = v[1] + ( a * t[2] )
 //  where v[2] represents the new instantaneous velocity and s[2] represents the new position
 	
-//	Actor::position.y = position.y + (Actor::speed.y * time.asSeconds()) + (GRAVITY * (time.asSeconds() * time.asSeconds())) / 2.0f;
+
 	Actor::speed.y = speed.y + (GRAVITY * time.asSeconds());
-//	Actor::sprite.move(Actor::speed);
+
 							
 };
 
@@ -187,7 +184,7 @@ void Actor::updatePosition(){
 	Actor::sprite.move(speed);
 }
 
-void Actor::handleCollision(){
+void Actor::handleCollision(){//sf::Rect<float> actorRect, sf::Rect<float> tileRect){
 	if (Actor::hasXCollision){
 		Actor::speed.x = 0.0f;
 	}
@@ -195,3 +192,38 @@ void Actor::handleCollision(){
 		Actor::speed.y = 0.0f;
 	}
 }
+
+void Actor::checkCollision(int map[], int width){
+	//Actor::hasYCollision = false;
+	int col = static_cast<int>((sprite.getPosition().x + size.x/2.0)) / 32;
+	int row = static_cast<int>((sprite.getPosition().y + size.y/2.0)) / 32;
+	int indexNum = (row * 16)+ col;
+//	std::cout << "position row: " << row;
+//	std::cout << "  position col: " << col << std::endl;
+	std::cout << indexNum << " is value " << map[indexNum] << std::endl;
+		if (map[indexNum] == 65 && speed.y >0.0f) {
+			Actor::hasYCollision = true;
+			std::cout << "Y COllsioin" << " at row: " << row << " col: " << col << std::endl;
+		} else
+
+		{
+			Actor::hasYCollision = false;
+		}
+}
+//
+//void checkCollisions(sf::Vector2f tilePos[], int tilePosSize){
+//	sf::Rect<float> actorRect = Actor::sprite.getGlobalBounds();
+//	sf::Rect<float> tileRect;
+//	for (int i = 0; i < tilePosSize; i++){
+//		tileRect = sf::Rect<float>(tilePos[i].x, tilePos[i].y, 32, 32);
+//		if (actorRect.intersects(tileRect)){
+//			//			Actor::handleCollision(actorRect, tileRect);
+//		}
+//
+//		//only need to check tiles around actor.  since we are using a set size of 32 for the tiles then we can search the grid around the player.
+//		// only need to check collision with 9 tiles
+//		//first get the tile x and y the actor's origin resides
+//
+//
+//	}
+//}
